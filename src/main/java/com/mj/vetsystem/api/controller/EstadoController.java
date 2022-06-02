@@ -4,7 +4,6 @@ import java.util.List;
 
 import javax.validation.Valid;
 
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -17,6 +16,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.mj.vetsystem.api.assembler.EstadoModelAssembler;
+import com.mj.vetsystem.api.disassembler.EstadoInputDisassembler;
+import com.mj.vetsystem.api.model.EstadoModel;
+import com.mj.vetsystem.api.model.input.EstadoInput;
 import com.mj.vetsystem.domain.model.Estado;
 import com.mj.vetsystem.domain.service.EstadoService;
 
@@ -26,31 +29,46 @@ public class EstadoController {
 
 	@Autowired
 	private EstadoService estadoService;
+	
+	@Autowired
+	private EstadoModelAssembler estadoModelAssembler;
+
+	@Autowired
+	private EstadoInputDisassembler estadoInputDisassembler;    
 
 	@GetMapping
-	public List<Estado> listar() {
-		return estadoService.listar();
+	public List<EstadoModel> listar() {
+		List<Estado> todosEstados =  estadoService.listar();
+		return estadoModelAssembler.toCollectionModel(todosEstados);
 	}
 
 	@GetMapping("/{estadoId}")
-	public Estado buscar(@PathVariable Long estadoId) {
-		return estadoService.buscarOuFalhar(estadoId);
+	public EstadoModel buscar(@PathVariable Long estadoId) {
+		Estado estado = estadoService.buscarOuFalhar(estadoId);
+		return estadoModelAssembler.toModel(estado);
 	}
 
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
-	public Estado adicionar(@RequestBody @Valid Estado estado) {
-		return estadoService.salvar(estado);
+	public EstadoModel adicionar(@RequestBody @Valid EstadoInput estadoInput) {
+		Estado estado = estadoInputDisassembler.toDomainObject(estadoInput);
+	    
+	    estado = estadoService.salvar(estado);
+	    
+	    return estadoModelAssembler.toModel(estado);
 	}
 
 	@PutMapping("/{estadoId}")
-	public Estado atualizar(@PathVariable Long estadoId, @RequestBody @Valid Estado estado) {
-		Estado estadoAtual = estadoService.buscarOuFalhar(estadoId);
-
-		BeanUtils.copyProperties(estado, estadoAtual, "id");
-
-		return estadoService.salvar(estadoAtual);
-	}
+	public EstadoModel atualizar(@PathVariable Long estadoId,
+	        @RequestBody @Valid EstadoInput estadoInput) {
+	    Estado estadoAtual = estadoService.buscarOuFalhar(estadoId);
+	    
+	    estadoInputDisassembler.copyToDomainObject(estadoInput, estadoAtual);
+	    
+	    estadoAtual = estadoService.salvar(estadoAtual);
+	    
+	    return estadoModelAssembler.toModel(estadoAtual);
+	}       
 
 	@DeleteMapping("/{estadoId}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
