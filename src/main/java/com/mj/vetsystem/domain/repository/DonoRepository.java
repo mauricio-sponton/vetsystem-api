@@ -6,11 +6,11 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
-import com.mj.vetsystem.domain.model.Cidade;
+import com.mj.vetsystem.domain.model.Dono;
 
 @Repository
-public interface CidadeRepository extends JpaRepository<Cidade, Long>{
+public interface DonoRepository extends JpaRepository<Dono, Long>{
 
-	@Query("select c from Cidade c join fetch c.estado")
-	List<Cidade> findAll();
+	@Query("select d from Dono d join fetch d.endereco.cidade")
+	List<Dono> findAll();
 }
