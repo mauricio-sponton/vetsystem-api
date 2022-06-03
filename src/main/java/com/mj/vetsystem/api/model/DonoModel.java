@@ -5,9 +5,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class DonoModel {
+public class DonoModel extends TodosDonosModel {
 
-	private Long id;
-	private String nome;
 	private EnderecoModel endereco;
 }

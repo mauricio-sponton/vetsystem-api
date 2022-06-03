@@ -26,6 +26,16 @@ create table dono (
 	primary key (id)
 ) engine=InnoDB default charset=utf8;
 
+create table usuario (
+	id bigint not null auto_increment,
+	nome varchar(80) not null,
+	email varchar(255) not null,
+	senha varchar(255) not null,
+	data_cadastro datetime not null,
+	
+	primary key (id)
+) engine=InnoDB default charset=utf8;
+
 
 alter table dono add constraint fk_dono_cidade
 foreign key (endereco_cidade_id) references cidade (id);
