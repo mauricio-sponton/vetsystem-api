@@ -1,10 +1,14 @@
 package com.mj.vetsystem.api.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,10 +21,12 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.mj.vetsystem.api.assembler.DonoModelAssembler;
+import com.mj.vetsystem.api.assembler.DonoResumoModelAssembler;
 import com.mj.vetsystem.api.disassembler.DonoInputDisassembler;
 import com.mj.vetsystem.api.model.DonoModel;
-import com.mj.vetsystem.api.model.TodosDonosModel;
+import com.mj.vetsystem.api.model.DonoResumoModel;
 import com.mj.vetsystem.api.model.input.DonoInput;
+import com.mj.vetsystem.core.data.PageableTranslator;
 import com.mj.vetsystem.domain.exception.CidadeNaoEncontradaException;
 import com.mj.vetsystem.domain.exception.NegocioException;
 import com.mj.vetsystem.domain.model.Dono;
@@ -35,14 +41,20 @@ public class DonoController {
 	
 	@Autowired
 	private DonoModelAssembler donoModelAssembler;
+	
+	@Autowired
+	private DonoResumoModelAssembler donoResumoModelAssembler;
 
 	@Autowired
 	private DonoInputDisassembler donoInputDisassembler; 
 
 	@GetMapping
-	public List<TodosDonosModel> listar() {
-		List<Dono> todosDonos = donoService.listar();
-		return donoModelAssembler.toCollectionModel(todosDonos);
+	public Page<DonoResumoModel> listar(Pageable pageable) {
+		pageable = traduzirPageable(pageable);
+		Page<Dono> todosDonos = donoService.listar(pageable);
+		List<DonoResumoModel> donosModel = donoResumoModelAssembler.toCollectionModel(todosDonos.getContent());
+		Page<DonoResumoModel> donoModelPage = new PageImpl<DonoResumoModel>(donosModel, pageable, todosDonos.getTotalElements());
+		return donoModelPage;
 	}
 
 	@GetMapping("/{donoId}")
@@ -86,6 +98,15 @@ public class DonoController {
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public void remover(@PathVariable Long donoId) {
 		donoService.excluir(donoId);
+	}
+	
+	private Pageable traduzirPageable(Pageable apiPageable) {
+		var mapeamento = Map.of(
+				"id", "id",
+				"nome", "nome"
+		);
+		
+		return PageableTranslator.translate(apiPageable, mapeamento);
 	}
 
 }

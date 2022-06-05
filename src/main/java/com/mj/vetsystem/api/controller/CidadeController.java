@@ -1,10 +1,14 @@
 package com.mj.vetsystem.api.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,6 +24,7 @@ import com.mj.vetsystem.api.assembler.CidadeModelAssembler;
 import com.mj.vetsystem.api.disassembler.CidadeInputDisassembler;
 import com.mj.vetsystem.api.model.CidadeModel;
 import com.mj.vetsystem.api.model.input.CidadeInput;
+import com.mj.vetsystem.core.data.PageableTranslator;
 import com.mj.vetsystem.domain.exception.EstadoNaoEncontradoException;
 import com.mj.vetsystem.domain.exception.NegocioException;
 import com.mj.vetsystem.domain.model.Cidade;
@@ -39,9 +44,12 @@ public class CidadeController {
 	private CidadeInputDisassembler cidadeInputDisassembler; 
 
 	@GetMapping
-	public List<CidadeModel> listar() {
-		List<Cidade> todasCidades = cidadeService.listar();
-		return cidadeModelAssembler.toCollectionModel(todasCidades);
+	public Page<CidadeModel> listar(Pageable pageable) {
+		pageable = traduzirPageable(pageable);
+		Page<Cidade> todasCidades = cidadeService.listar(pageable);
+		List<CidadeModel> cidadesModel = cidadeModelAssembler.toCollectionModel(todasCidades.getContent());
+		Page<CidadeModel> cidadeModelPage = new PageImpl<CidadeModel>(cidadesModel, pageable, todasCidades.getTotalElements());
+		return cidadeModelPage;
 	}
 
 	@GetMapping("/{cidadeId}")
@@ -85,6 +93,17 @@ public class CidadeController {
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public void remover(@PathVariable Long cidadeId) {
 		cidadeService.excluir(cidadeId);
+	}
+	
+	private Pageable traduzirPageable(Pageable apiPageable) {
+		var mapeamento = Map.of(
+				"id", "id",
+				"nome", "nome",
+				"estado.nome", "estado.nome",
+				"estado.id", "estado.id"
+		);
+		
+		return PageableTranslator.translate(apiPageable, mapeamento);
 	}
 
 }
