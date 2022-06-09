@@ -2,15 +2,19 @@ set foreign_key_checks = 0;
 
 delete from cidade;
 delete from estado;
-delete from dono;
+delete from cliente;
 delete from usuario;
+delete from paciente;
+delete from historico_peso;
 
 set foreign_key_checks = 1;
 
 alter table cidade auto_increment = 1;
 alter table estado auto_increment = 1;
-alter table dono auto_increment = 1;
+alter table cliente auto_increment = 1;
 alter table usuario auto_increment = 1;
+alter table paciente auto_increment = 1;
+alter table historico_peso auto_increment = 1;
 
 
 insert into estado (id, nome) values (1, 'Minas Gerais');
@@ -23,9 +27,11 @@ insert into cidade (id, nome, estado_id) values (3, 'São Paulo', 2);
 insert into cidade (id, nome, estado_id) values (4, 'Campinas', 2);
 insert into cidade (id, nome, estado_id) values (5, 'Fortaleza', 3);
 
-insert into dono (id, nome, endereco_cidade_id, endereco_cep, endereco_logradouro, endereco_numero, endereco_bairro) values (1, 'Jordana', 1, '38400-999', 'Rua João Pinheiro', '1000', 'Centro');
-insert into dono (id, nome, endereco_cidade_id, endereco_cep, endereco_logradouro, endereco_numero, endereco_bairro) values (2, 'Carmem', 2, '11692-999', 'Rua Eliseu Visconti', '60', 'Belas Artes');
-insert into dono (id, nome, endereco_cidade_id, endereco_cep, endereco_logradouro, endereco_numero, endereco_bairro) values (3, 'Alcione', 3, '11740-000', 'Avenida Raul Cury', '1034', 'Cibratel');
+insert into cliente (id, nome, endereco_cidade_id, endereco_cep, endereco_logradouro, endereco_numero, endereco_bairro) values (1, 'Jordana', 1, '38400-999', 'Rua João Pinheiro', '1000', 'Centro');
+insert into cliente (id, nome, endereco_cidade_id, endereco_cep, endereco_logradouro, endereco_numero, endereco_bairro) values (2, 'Carmem', 2, '11692-999', 'Rua Eliseu Visconti', '60', 'Belas Artes');
+insert into cliente (id, nome, endereco_cidade_id, endereco_cep, endereco_logradouro, endereco_numero, endereco_bairro) values (3, 'Alcione', 3, '11740-000', 'Avenida Raul Cury', '1034', 'Cibratel');
+
+insert into paciente (id, nome, sexo, porte, data_nascimento, peso) values (1, 'Taz', 'MACHO', 'MEDIO', utc_timestamp, 7.200);
 
 insert into usuario (id, nome, email, senha, data_cadastro) values
 (1, 'João da Silva', 'joao.ger@algafood.com', '123', utc_timestamp),

@@ -12,7 +12,7 @@ create table cidade (
 	constraint fk_cidade_estado foreign key (estado_id) references estado (id)
 ) engine=InnoDB default charset=utf8;
 
-create table dono (
+create table cliente (
 	id bigint not null auto_increment,
 	nome varchar(80) not null,
     
@@ -36,6 +36,31 @@ create table usuario (
 	primary key (id)
 ) engine=InnoDB default charset=utf8;
 
+create table paciente (
+	id bigint not null auto_increment,
+	nome varchar(80) not null,
+	sexo varchar(20),
+	porte varchar(20),
+	data_nascimento datetime not null,
+	peso decimal(6,3),
 
-alter table dono add constraint fk_dono_cidade
+	primary key (id)
+
+) engine=InnoDB default charset=utf8;
+
+create table historico_peso (
+	id bigint not null auto_increment,
+	paciente_id bigint not null,
+	data_cadastro datetime not null,
+	peso decimal(6,3),
+
+	primary key (id)
+
+) engine=InnoDB default charset=utf8;
+
+
+alter table cliente add constraint fk_cliente_cidade
 foreign key (endereco_cidade_id) references cidade (id);
+
+alter table historico_peso add constraint fk_historico_peso_paciente
+foreign key (paciente_id) references paciente (id);

@@ -5,9 +5,10 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class DonoResumoModel {
+public class ClienteModel {
+
 
 	private Long id;
 	private String nome;
-	
+	private EnderecoModel endereco;
 }

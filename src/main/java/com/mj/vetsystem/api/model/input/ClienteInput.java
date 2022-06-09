@@ -9,7 +9,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class DonoInput {
+public class ClienteInput {
 
 	@NotBlank
 	private String nome;
