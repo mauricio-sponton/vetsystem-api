@@ -2,9 +2,7 @@ package com.mj.vetsystem.domain.model;
 
 import java.math.BigDecimal;
 import java.time.OffsetDateTime;
-import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -12,15 +10,18 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+
+import org.springframework.data.domain.AbstractAggregateRoot;
+
+import com.mj.vetsystem.domain.event.PacienteSalvoEvent;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 @Data
-@EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = false)
 @Entity
-public class Paciente {
+public class Paciente extends AbstractAggregateRoot<Paciente>{
 
 	@EqualsAndHashCode.Include
 	@Id
@@ -40,8 +41,7 @@ public class Paciente {
 	
 	private BigDecimal peso;
 	
-	@OneToMany(mappedBy = "paciente", cascade = CascadeType.ALL)
-	private List<HistoricoPeso> historicoPeso;
-	
-	
+	public void registrarPeso() {
+		registerEvent(new PacienteSalvoEvent(this));
+	}
 }

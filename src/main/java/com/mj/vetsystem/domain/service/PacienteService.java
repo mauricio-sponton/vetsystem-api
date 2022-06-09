@@ -1,7 +1,5 @@
 package com.mj.vetsystem.domain.service;
 
-import java.time.OffsetDateTime;
-import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +7,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.mj.vetsystem.domain.exception.PacienteNaoEncontradoException;
-import com.mj.vetsystem.domain.model.HistoricoPeso;
 import com.mj.vetsystem.domain.model.Paciente;
 import com.mj.vetsystem.domain.repository.PacienteRepository;
 
@@ -19,23 +16,18 @@ public class PacienteService {
 
 	@Autowired
 	private PacienteRepository pacienteRepository;
-
+	
 	public List<Paciente> listar(){
 		return pacienteRepository.findAll();
 	}
 
-	@Transactional
+	@Transactional 
 	public Paciente salvar(Paciente paciente) {
-//		if(paciente.getPeso() != null) {
-			//fazer via listener
-//			paciente.getHistoricoPeso().forEach(p -> {
-//				var historicoPeso = new HistoricoPeso();
-//				historicoPeso.setPeso(paciente.getPeso());
-//				historicoPeso.setDataCadastro(OffsetDateTime.now());
-//				historicoPeso.setPaciente(paciente);
-//			});
-			
-//		}
+		
+		if(paciente.getPeso() != null) {
+			paciente.registrarPeso();
+		}
+		
 		return pacienteRepository.save(paciente);
 	}
 
