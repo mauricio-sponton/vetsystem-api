@@ -43,6 +43,10 @@ create table paciente (
 	porte varchar(20),
 	data_nascimento datetime not null,
 	peso decimal(6,3),
+	temperatura decimal(3,1),
+	vivo tinyint(1),
+	agressivo tinyint(1),
+	reprodutivo tinyint(1),
 
 	primary key (id)
 

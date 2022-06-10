@@ -1,7 +1,5 @@
 package com.mj.vetsystem.domain.listener;
 
-import java.time.OffsetDateTime;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
@@ -23,7 +21,6 @@ public class RegistroHistoricoPesoListener {
 
 		var historicoPeso = new HistoricoPeso();
 		historicoPeso.setPeso(paciente.getPeso());
-		historicoPeso.setDataCadastro(OffsetDateTime.now());
 		historicoPeso.setPaciente(paciente);
 
 		pacienteRepository.save(historicoPeso);

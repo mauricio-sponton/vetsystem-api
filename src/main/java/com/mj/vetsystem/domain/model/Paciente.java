@@ -41,6 +41,14 @@ public class Paciente extends AbstractAggregateRoot<Paciente>{
 	
 	private BigDecimal peso;
 	
+	private BigDecimal temperatura;
+	
+	private Boolean vivo = Boolean.TRUE;
+	
+	private Boolean agressivo = Boolean.FALSE;
+	
+	private Boolean reprodutivo = Boolean.TRUE;
+	
 	public void registrarPeso() {
 		registerEvent(new PacienteSalvoEvent(this));
 	}

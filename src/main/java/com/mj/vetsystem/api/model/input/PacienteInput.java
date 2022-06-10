@@ -32,4 +32,16 @@ public class PacienteInput {
     @Positive
     private BigDecimal peso;
     
+    @Positive
+    private BigDecimal temperatura;
+    
+    @NotNull
+    private Boolean vivo;
+    
+    @NotNull
+    private Boolean agressivo;
+    
+    @NotNull
+    private Boolean reprodutivo;
+    
 }

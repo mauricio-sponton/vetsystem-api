@@ -31,7 +31,9 @@ insert into cliente (id, nome, endereco_cidade_id, endereco_cep, endereco_lograd
 insert into cliente (id, nome, endereco_cidade_id, endereco_cep, endereco_logradouro, endereco_numero, endereco_bairro) values (2, 'Carmem', 2, '11692-999', 'Rua Eliseu Visconti', '60', 'Belas Artes');
 insert into cliente (id, nome, endereco_cidade_id, endereco_cep, endereco_logradouro, endereco_numero, endereco_bairro) values (3, 'Alcione', 3, '11740-000', 'Avenida Raul Cury', '1034', 'Cibratel');
 
-insert into paciente (id, nome, sexo, porte, data_nascimento, peso) values (1, 'Taz', 'MACHO', 'MEDIO', utc_timestamp, 7.200);
+insert into paciente (id, nome, sexo, porte, data_nascimento, peso, temperatura, vivo, agressivo, reprodutivo) values (1, 'Taz', 'MACHO', 'MEDIO', utc_timestamp, 7.200, 36.1, true, false, false);
+
+insert into historico_peso(id, paciente_id, data_cadastro, peso) values (1, 1, utc_timestamp, 7.2);
 
 insert into usuario (id, nome, email, senha, data_cadastro) values
 (1, 'João da Silva', 'joao.ger@algafood.com', '123', utc_timestamp),
