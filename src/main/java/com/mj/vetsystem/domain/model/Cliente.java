@@ -1,8 +1,12 @@
 package com.mj.vetsystem.domain.model;
 
+import java.time.OffsetDateTime;
+
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -22,6 +26,16 @@ public class Cliente {
 	
 	@Column(nullable = false)
 	private String nome;
+	
+	private String email;
+	
+	private String cpf;
+	
+	@Column(nullable = false, columnDefinition = "datetime")
+	private OffsetDateTime dataNascimento;
+	
+	@Enumerated(EnumType.STRING)
+	private SexoCliente sexo;
 	
 	@Embedded
 	private Endereco endereco;

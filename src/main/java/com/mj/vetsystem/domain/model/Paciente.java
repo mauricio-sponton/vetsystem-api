@@ -10,6 +10,7 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
 import org.springframework.data.domain.AbstractAggregateRoot;
 
@@ -48,6 +49,9 @@ public class Paciente extends AbstractAggregateRoot<Paciente>{
 	private Boolean agressivo = Boolean.FALSE;
 	
 	private Boolean reprodutivo = Boolean.TRUE;
+	
+	@ManyToOne
+	private Cliente dono;
 	
 	public void registrarPeso() {
 		registerEvent(new PacienteSalvoEvent(this));

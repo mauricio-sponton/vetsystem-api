@@ -3,6 +3,7 @@ package com.mj.vetsystem.api.model.input;
 import java.math.BigDecimal;
 import java.time.OffsetDateTime;
 
+import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
@@ -43,5 +44,9 @@ public class PacienteInput {
     
     @NotNull
     private Boolean reprodutivo;
+    
+    @Valid
+    @NotNull
+    private ClienteIdInput dono;
     
 }

@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.mj.vetsystem.api.model.input.PacienteInput;
+import com.mj.vetsystem.domain.model.Cliente;
 import com.mj.vetsystem.domain.model.Paciente;
 
 @Component
@@ -18,6 +19,7 @@ public class PacienteInputDisassembler {
     }
     
     public void copyToDomainObject(PacienteInput pacienteInput, Paciente paciente) {
+    	paciente.setDono(new Cliente());
         modelMapper.map(pacienteInput, paciente);
     }   
 } 

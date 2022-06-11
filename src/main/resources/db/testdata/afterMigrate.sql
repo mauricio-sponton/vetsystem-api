@@ -27,11 +27,11 @@ insert into cidade (id, nome, estado_id) values (3, 'São Paulo', 2);
 insert into cidade (id, nome, estado_id) values (4, 'Campinas', 2);
 insert into cidade (id, nome, estado_id) values (5, 'Fortaleza', 3);
 
-insert into cliente (id, nome, endereco_cidade_id, endereco_cep, endereco_logradouro, endereco_numero, endereco_bairro) values (1, 'Jordana', 1, '38400-999', 'Rua João Pinheiro', '1000', 'Centro');
-insert into cliente (id, nome, endereco_cidade_id, endereco_cep, endereco_logradouro, endereco_numero, endereco_bairro) values (2, 'Carmem', 2, '11692-999', 'Rua Eliseu Visconti', '60', 'Belas Artes');
-insert into cliente (id, nome, endereco_cidade_id, endereco_cep, endereco_logradouro, endereco_numero, endereco_bairro) values (3, 'Alcione', 3, '11740-000', 'Avenida Raul Cury', '1034', 'Cibratel');
+insert into cliente (id, nome, email, cpf, data_nascimento, sexo, endereco_cidade_id, endereco_cep, endereco_logradouro, endereco_numero, endereco_bairro) values (1, 'Jordana', 'jordana.ferreira@gmail.com', '341.660.341-97', utc_timestamp, 'FEMININO', 1, '38400-999', 'Rua João Pinheiro', '1000', 'Centro');
+insert into cliente (id, nome, email, cpf, data_nascimento, sexo, endereco_cidade_id, endereco_cep, endereco_logradouro, endereco_numero, endereco_bairro) values (2, 'Carmem', 'carmemligia@gmail.com', '456.574.747-24', utc_timestamp, 'FEMININO', 2, '11692-999', 'Rua Eliseu Visconti', '60', 'Belas Artes');
+insert into cliente (id, nome, email, cpf, data_nascimento, sexo, endereco_cidade_id, endereco_cep, endereco_logradouro, endereco_numero, endereco_bairro) values (3, 'Alcione', 'alcione@gmail.com', '168.868.024-10', utc_timestamp, 'FEMININO', 3, '11740-000', 'Avenida Raul Cury', '1034', 'Cibratel');
 
-insert into paciente (id, nome, sexo, porte, data_nascimento, peso, temperatura, vivo, agressivo, reprodutivo) values (1, 'Taz', 'MACHO', 'MEDIO', utc_timestamp, 7.200, 36.1, true, false, false);
+insert into paciente (id, dono_id, nome, sexo, porte, data_nascimento, peso, temperatura, vivo, agressivo, reprodutivo) values (1, 1, 'Taz', 'MACHO', 'MEDIO', utc_timestamp, 7.200, 36.1, true, false, false);
 
 insert into historico_peso(id, paciente_id, data_cadastro, peso) values (1, 1, utc_timestamp, 7.2);
 

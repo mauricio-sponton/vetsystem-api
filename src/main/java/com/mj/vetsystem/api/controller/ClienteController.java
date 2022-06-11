@@ -27,8 +27,6 @@ import com.mj.vetsystem.api.model.ClienteModel;
 import com.mj.vetsystem.api.model.ClienteResumoModel;
 import com.mj.vetsystem.api.model.input.ClienteInput;
 import com.mj.vetsystem.core.data.PageableTranslator;
-import com.mj.vetsystem.domain.exception.CidadeNaoEncontradaException;
-import com.mj.vetsystem.domain.exception.NegocioException;
 import com.mj.vetsystem.domain.model.Cliente;
 import com.mj.vetsystem.domain.service.ClienteService;
 
@@ -67,21 +65,17 @@ public class ClienteController {
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
 	public ClienteModel adicionar(@RequestBody @Valid ClienteInput clienteInput) {
-	    try {
 	        Cliente cliente = clienteInputDisassembler.toDomainObject(clienteInput);
 	        
 	        cliente = clienteService.salvar(cliente);
 	        
 	        return clienteModelAssembler.toModel(cliente);
-	    } catch (CidadeNaoEncontradaException e) {
-	        throw new NegocioException(e.getMessage(), e);
-	    }
+	
 	}
 
 	@PutMapping("/{clienteId}")
 	public ClienteModel atualizar(@PathVariable Long clienteId,
 	        @RequestBody @Valid ClienteInput clienteInput) {
-	    try {
 	        Cliente clienteAtual = clienteService.buscarOuFalhar(clienteId);
 	        
 	        clienteInputDisassembler.copyToDomainObject(clienteInput, clienteAtual);
@@ -89,9 +83,6 @@ public class ClienteController {
 	        clienteAtual = clienteService.salvar(clienteAtual);
 	        
 	        return clienteModelAssembler.toModel(clienteAtual);
-	    } catch (CidadeNaoEncontradaException e) {
-	        throw new NegocioException(e.getMessage(), e);
-	    }
 	}
 
 	@DeleteMapping("/{clienteId}")

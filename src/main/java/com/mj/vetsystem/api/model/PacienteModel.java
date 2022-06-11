@@ -23,6 +23,7 @@ public class PacienteModel {
     private Boolean vivo;
     private Boolean agressivo;
     private Boolean reprodutivo;
+    private ClienteModel dono;
     
     public String getSexo() {
     	return sexo.getDescricao();

@@ -15,6 +15,10 @@ create table cidade (
 create table cliente (
 	id bigint not null auto_increment,
 	nome varchar(80) not null,
+	email varchar(60) not null,
+	cpf varchar(14) not null,
+	data_nascimento datetime not null,
+    sexo varchar(20),
     
 	endereco_cidade_id bigint,
 	endereco_cep varchar(9),
@@ -38,6 +42,7 @@ create table usuario (
 
 create table paciente (
 	id bigint not null auto_increment,
+	dono_id bigint not null,
 	nome varchar(80) not null,
 	sexo varchar(20),
 	porte varchar(20),
@@ -65,6 +70,9 @@ create table historico_peso (
 
 alter table cliente add constraint fk_cliente_cidade
 foreign key (endereco_cidade_id) references cidade (id);
+
+alter table paciente add constraint fk_paciente_dono
+foreign key (dono_id) references cliente (id);
 
 alter table historico_peso add constraint fk_historico_peso_paciente
 foreign key (paciente_id) references paciente (id);
