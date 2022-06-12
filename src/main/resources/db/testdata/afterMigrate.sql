@@ -6,6 +6,8 @@ delete from cliente;
 delete from usuario;
 delete from paciente;
 delete from historico_peso;
+delete from especie;
+delete from raca;
 
 set foreign_key_checks = 1;
 
@@ -15,6 +17,8 @@ alter table cliente auto_increment = 1;
 alter table usuario auto_increment = 1;
 alter table paciente auto_increment = 1;
 alter table historico_peso auto_increment = 1;
+alter table especie auto_increment = 1;
+alter table raca auto_increment = 1;
 
 
 insert into estado (id, nome) values (1, 'Minas Gerais');
@@ -31,7 +35,19 @@ insert into cliente (id, nome, email, cpf, data_nascimento, sexo, endereco_cidad
 insert into cliente (id, nome, email, cpf, data_nascimento, sexo, endereco_cidade_id, endereco_cep, endereco_logradouro, endereco_numero, endereco_bairro) values (2, 'Carmem', 'carmemligia@gmail.com', '456.574.747-24', utc_timestamp, 'FEMININO', 2, '11692-999', 'Rua Eliseu Visconti', '60', 'Belas Artes');
 insert into cliente (id, nome, email, cpf, data_nascimento, sexo, endereco_cidade_id, endereco_cep, endereco_logradouro, endereco_numero, endereco_bairro) values (3, 'Alcione', 'alcione@gmail.com', '168.868.024-10', utc_timestamp, 'FEMININO', 3, '11740-000', 'Avenida Raul Cury', '1034', 'Cibratel');
 
-insert into paciente (id, dono_id, nome, sexo, porte, data_nascimento, peso, temperatura, vivo, agressivo, reprodutivo) values (1, 1, 'Taz', 'MACHO', 'MEDIO', utc_timestamp, 7.200, 36.1, true, false, false);
+
+
+insert into especie (id, nome) values (1, 'Canino');
+insert into especie (id, nome) values (2, 'Felino');
+
+insert into raca (id, especie_id, nome) values (1, 1, 'Bulldog');
+insert into raca (id, especie_id, nome) values (2, 1, 'Poodle');
+insert into raca (id, especie_id, nome) values (3, 1, 'Husky');
+insert into raca (id, especie_id, nome) values (4, 2, 'Persa');
+insert into raca (id, especie_id, nome) values (5, 2, 'Siamês');
+
+insert into paciente (id, dono_id, raca_id, nome, sexo, porte, data_nascimento, peso, temperatura, vivo, agressivo, reprodutivo) values (1, 1, 2, 'Taz', 'MACHO', 'MEDIO', utc_timestamp, 7.200, 36.1, true, false, false);
+insert into paciente (id, dono_id, raca_id, nome, sexo, porte, data_nascimento, peso, temperatura, vivo, agressivo, reprodutivo) values (2, 1, 4, 'Loki', 'MACHO', 'PEQUENO', utc_timestamp, 1.600, 38.1, true, true, false);
 
 insert into historico_peso(id, paciente_id, data_cadastro, peso) values (1, 1, utc_timestamp, 7.2);
 

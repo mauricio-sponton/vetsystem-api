@@ -12,24 +12,6 @@ create table cidade (
 	constraint fk_cidade_estado foreign key (estado_id) references estado (id)
 ) engine=InnoDB default charset=utf8;
 
-create table cliente (
-	id bigint not null auto_increment,
-	nome varchar(80) not null,
-	email varchar(60) not null,
-	cpf varchar(14) not null,
-	data_nascimento datetime not null,
-    sexo varchar(20),
-    
-	endereco_cidade_id bigint,
-	endereco_cep varchar(9),
-	endereco_logradouro varchar(100),
-	endereco_numero varchar(20),
-	endereco_complemento varchar(60),
-	endereco_bairro varchar(60),
-	
-	primary key (id)
-) engine=InnoDB default charset=utf8;
-
 create table usuario (
 	id bigint not null auto_increment,
 	nome varchar(80) not null,
@@ -43,6 +25,7 @@ create table usuario (
 create table paciente (
 	id bigint not null auto_increment,
 	dono_id bigint not null,
+	raca_id bigint not null,
 	nome varchar(80) not null,
 	sexo varchar(20),
 	porte varchar(20),
@@ -68,11 +51,49 @@ create table historico_peso (
 ) engine=InnoDB default charset=utf8;
 
 
+create table especie (
+	id bigint not null auto_increment, 
+    nome varchar(80) unique not null,
+    primary key (id)
+) engine=InnoDB default charset=utf8;
+
+create table raca (
+	id bigint not null auto_increment,
+	especie_id bigint not null,
+	nome varchar(80) unique not null,    
+	primary key (id)
+) engine=InnoDB default charset=utf8;
+
+
+create table cliente (
+	id bigint not null auto_increment,
+	nome varchar(80) not null,
+	email varchar(60) not null,
+	cpf varchar(14) not null,
+	data_nascimento datetime not null,
+    sexo varchar(20),
+    
+	endereco_cidade_id bigint,
+	endereco_cep varchar(9),
+	endereco_logradouro varchar(100),
+	endereco_numero varchar(20),
+	endereco_complemento varchar(60),
+	endereco_bairro varchar(60),
+	
+	primary key (id)
+) engine=InnoDB default charset=utf8;
+
 alter table cliente add constraint fk_cliente_cidade
 foreign key (endereco_cidade_id) references cidade (id);
 
 alter table paciente add constraint fk_paciente_dono
 foreign key (dono_id) references cliente (id);
+
+alter table paciente add constraint fk_paciente_raca
+foreign key (raca_id) references raca (id);
+
+alter table raca add constraint fk_raca_especie
+foreign key (especie_id) references especie (id);
 
 alter table historico_peso add constraint fk_historico_peso_paciente
 foreign key (paciente_id) references paciente (id);

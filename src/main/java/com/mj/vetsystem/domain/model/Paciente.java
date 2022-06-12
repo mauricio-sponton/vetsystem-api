@@ -53,6 +53,9 @@ public class Paciente extends AbstractAggregateRoot<Paciente>{
 	@ManyToOne
 	private Cliente dono;
 	
+	@ManyToOne
+	private Raca raca;
+	
 	public void registrarPeso() {
 		registerEvent(new PacienteSalvoEvent(this));
 	}

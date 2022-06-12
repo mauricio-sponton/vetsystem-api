@@ -27,6 +27,7 @@ public class PacienteInput {
     @NotNull
     private PortePaciente porte;
     
+    
     @NotNull
     private OffsetDateTime dataNascimento;
     
@@ -48,5 +49,9 @@ public class PacienteInput {
     @Valid
     @NotNull
     private ClienteIdInput dono;
+    
+    @Valid
+    @NotNull
+    private RacaIdInput raca;
     
 }

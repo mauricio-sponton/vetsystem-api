@@ -5,11 +5,10 @@ import lombok.Setter;
 
 @Setter
 @Getter
-public class PacienteResumoModel {
+public class RacaModel {
 
     private Long id;
     private String nome;
-    private ClienteResumoModel dono;
-    private RacaModel raca;
+    private EspecieModel especie;
     
-}
+}  

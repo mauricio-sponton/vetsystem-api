@@ -3,6 +3,7 @@ package com.mj.vetsystem.api.model;
 import java.math.BigDecimal;
 import java.time.OffsetDateTime;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.mj.vetsystem.domain.model.PortePaciente;
 import com.mj.vetsystem.domain.model.SexoPaciente;
 
@@ -17,6 +18,8 @@ public class PacienteModel {
     private String nome;
     private SexoPaciente sexo;
     private PortePaciente porte;
+    
+    @JsonFormat(pattern="yyyy-MM-dd'T'HH:mm:ss'Z'")
     private OffsetDateTime dataNascimento;
     private BigDecimal peso;
     private BigDecimal temperatura;
@@ -24,6 +27,7 @@ public class PacienteModel {
     private Boolean agressivo;
     private Boolean reprodutivo;
     private ClienteModel dono;
+    private RacaModel raca;
     
     public String getSexo() {
     	return sexo.getDescricao();

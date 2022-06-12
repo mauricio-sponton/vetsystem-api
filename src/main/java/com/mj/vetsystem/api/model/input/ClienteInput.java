@@ -28,6 +28,7 @@ public class ClienteInput {
 	@NotBlank
 	private String cpf;
 	
+	
 	@NotNull
 	private OffsetDateTime dataNascimento;
 	

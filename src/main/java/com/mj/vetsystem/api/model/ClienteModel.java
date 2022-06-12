@@ -2,6 +2,7 @@ package com.mj.vetsystem.api.model;
 
 import java.time.OffsetDateTime;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.mj.vetsystem.domain.model.SexoCliente;
 
 import lombok.Getter;
@@ -15,6 +16,8 @@ public class ClienteModel {
 	private String nome;
 	private String email;
 	private String cpf;
+	
+	@JsonFormat(pattern="yyyy-MM-dd'T'HH:mm:ss'Z'")
 	private OffsetDateTime dataNascimento;
 	private SexoCliente sexo;
 	private EnderecoModel endereco;
