@@ -26,8 +26,10 @@ public class Cliente {
 	
 	private String nome;
 	
+	@Column(unique = true)
 	private String email;
 	
+	@Column(unique = true)
 	private String cpf;
 	
 	@Column(nullable = false, columnDefinition = "datetime")

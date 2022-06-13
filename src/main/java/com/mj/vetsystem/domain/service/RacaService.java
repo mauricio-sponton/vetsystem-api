@@ -1,5 +1,7 @@
 package com.mj.vetsystem.domain.service;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -9,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.mj.vetsystem.domain.exception.EntidadeEmUsoException;
+import com.mj.vetsystem.domain.exception.NegocioException;
 import com.mj.vetsystem.domain.exception.RacaNaoEncontradaException;
 import com.mj.vetsystem.domain.model.Especie;
 import com.mj.vetsystem.domain.model.Raca;
@@ -31,9 +34,18 @@ public class RacaService {
 
 	@Transactional
 	public Raca salvar(Raca raca) {
+		
+		
 		Long especieId = raca.getEspecie().getId();
-
 		Especie especie = especieService.buscarOuFalhar(especieId);
+		
+		racaRepository.detach(raca);
+		Optional<Raca> racaExistente = racaRepository.findByNomeAndEspecie(raca.getNome(), especieId);
+		
+		if(racaExistente.isPresent() && !racaExistente.get().equals(raca)) {
+			throw new NegocioException(
+					String.format("Já existe uma raça cadastrada com o nome %s na espécie %s", raca.getNome(), especie.getNome()));
+		}
 
 		raca.setEspecie(especie);
 

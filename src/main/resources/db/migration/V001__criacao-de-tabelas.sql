@@ -60,7 +60,7 @@ create table especie (
 create table raca (
 	id bigint not null auto_increment,
 	especie_id bigint not null,
-	nome varchar(80) unique not null,    
+	nome varchar(80) not null,    
 	primary key (id)
 ) engine=InnoDB default charset=utf8;
 
@@ -68,8 +68,8 @@ create table raca (
 create table cliente (
 	id bigint not null auto_increment,
 	nome varchar(80) not null,
-	email varchar(60) not null,
-	cpf varchar(14) not null,
+	email varchar(60) unique not null,
+	cpf varchar(14) unique not null,
 	data_nascimento datetime not null,
     sexo varchar(20),
     

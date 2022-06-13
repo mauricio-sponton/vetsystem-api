@@ -1,5 +1,7 @@
 package com.mj.vetsystem.domain.service;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -10,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.mj.vetsystem.domain.exception.EntidadeEmUsoException;
 import com.mj.vetsystem.domain.exception.EspecieNaoEncontradaException;
+import com.mj.vetsystem.domain.exception.NegocioException;
 import com.mj.vetsystem.domain.model.Especie;
 import com.mj.vetsystem.domain.repository.EspecieRepository;
 
@@ -27,6 +30,15 @@ public class EspecieService {
 
 	@Transactional
 	public Especie salvar(Especie especie) {
+		especieRepository.detach(especie);
+		
+		Optional<Especie> especieExistente = especieRepository.findByNome(especie.getNome());
+		
+		if(especieExistente.isPresent() && !especieExistente.get().equals(especie)) {
+			throw new NegocioException(
+					String.format("Já existe uma espécie cadastrada com o nome %s", especie.getNome()));
+		}
+		
 		return especieRepository.save(especie);
 	}
 
