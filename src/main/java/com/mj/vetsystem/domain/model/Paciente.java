@@ -15,6 +15,8 @@ import javax.persistence.ManyToOne;
 import org.springframework.data.domain.AbstractAggregateRoot;
 
 import com.mj.vetsystem.domain.event.PacienteSalvoEvent;
+import com.mj.vetsystem.domain.model.enums.PortePaciente;
+import com.mj.vetsystem.domain.model.enums.SexoPaciente;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;

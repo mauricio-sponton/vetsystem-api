@@ -3,7 +3,7 @@ package com.mj.vetsystem.api.model;
 import java.time.OffsetDateTime;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.mj.vetsystem.domain.model.SexoCliente;
+import com.mj.vetsystem.domain.model.enums.SexoCliente;
 
 import lombok.Getter;
 import lombok.Setter;

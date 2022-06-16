@@ -4,8 +4,8 @@ import java.math.BigDecimal;
 import java.time.OffsetDateTime;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.mj.vetsystem.domain.model.PortePaciente;
-import com.mj.vetsystem.domain.model.SexoPaciente;
+import com.mj.vetsystem.domain.model.enums.PortePaciente;
+import com.mj.vetsystem.domain.model.enums.SexoPaciente;
 
 import lombok.Getter;
 import lombok.Setter;

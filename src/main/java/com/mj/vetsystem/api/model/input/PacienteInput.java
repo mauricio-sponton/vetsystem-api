@@ -6,10 +6,11 @@ import java.time.OffsetDateTime;
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.PastOrPresent;
 import javax.validation.constraints.Positive;
 
-import com.mj.vetsystem.domain.model.PortePaciente;
-import com.mj.vetsystem.domain.model.SexoPaciente;
+import com.mj.vetsystem.domain.model.enums.PortePaciente;
+import com.mj.vetsystem.domain.model.enums.SexoPaciente;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -27,7 +28,7 @@ public class PacienteInput {
     @NotNull
     private PortePaciente porte;
     
-    
+    @PastOrPresent
     @NotNull
     private OffsetDateTime dataNascimento;
     

@@ -1,4 +1,4 @@
-package com.mj.vetsystem.domain.model;
+package com.mj.vetsystem.domain.model.enums;
 
 public enum SexoCliente {
 

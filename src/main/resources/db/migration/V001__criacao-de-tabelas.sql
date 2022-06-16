@@ -83,6 +83,33 @@ create table cliente (
 	primary key (id)
 ) engine=InnoDB default charset=utf8;
 
+create table internacao (
+	id bigint not null auto_increment, 
+	paciente_id bigint not null,
+	data_admissao datetime not null,
+	data_termino datetime,
+	peso decimal(6,3),
+	temperatura decimal(3,1),
+	status varchar(30),
+	prognostico longtext,
+	diagnostico longtext,
+	observacoes longtext,
+	
+	primary key (id)	
+) engine=InnoDB default charset=utf8;
+
+create table tratamento_internacao (
+	id bigint not null,
+	internacao_id bigint not null,
+	nome longtext not null,
+	data datetime not null,
+	dose smallint(6), 
+	via_medicamento varchar(30),
+	
+	primary key (id)
+
+) engine=InnoDB default charset=utf8;
+
 alter table cliente add constraint fk_cliente_cidade
 foreign key (endereco_cidade_id) references cidade (id);
 
@@ -94,6 +121,12 @@ foreign key (raca_id) references raca (id);
 
 alter table raca add constraint fk_raca_especie
 foreign key (especie_id) references especie (id);
+
+alter table internacao add constraint fk_internacao_paciente
+foreign key (paciente_id) references paciente (id);
+
+alter table tratamento_internacao add constraint fk_tratamento_internacao_internacao
+foreign key (internacao_id) references internacao (id);
 
 alter table historico_peso add constraint fk_historico_peso_paciente
 foreign key (paciente_id) references paciente (id);
