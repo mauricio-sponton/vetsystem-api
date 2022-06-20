@@ -20,7 +20,7 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Entity
-public class TratamentoInternacao {
+public class ProgressoTratamento {
 
 	@EqualsAndHashCode.Include
 	@Id

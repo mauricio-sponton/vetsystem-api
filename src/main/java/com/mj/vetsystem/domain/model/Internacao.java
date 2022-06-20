@@ -39,7 +39,7 @@ public class Internacao {
 	private StatusInternacao status = StatusInternacao.ATIVA;
 	
 	private OffsetDateTime dataAdmissao;
-	private OffsetDateTime dataTermino;
+	private OffsetDateTime dataAlta;
 	
 	@Lob
 	private String prognostico;
@@ -54,5 +54,5 @@ public class Internacao {
 	private Paciente paciente;
 	
 	@OneToMany(mappedBy = "internacao", cascade = CascadeType.ALL, orphanRemoval = true)
-	private List<TratamentoInternacao> tratamentos = new ArrayList<>();
+	private List<ProgressoTratamento> tratamentos = new ArrayList<>();
 }

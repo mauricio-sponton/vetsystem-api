@@ -9,7 +9,7 @@ delete from historico_peso;
 delete from especie;
 delete from raca;
 delete from internacao;
-delete from tratamento_internacao;
+delete from progresso_tratamento;
 
 set foreign_key_checks = 1;
 
@@ -22,7 +22,7 @@ alter table historico_peso auto_increment = 1;
 alter table especie auto_increment = 1;
 alter table raca auto_increment = 1;
 alter table internacao auto_increment = 1;
-alter table tratamento_internacao auto_increment = 1;
+alter table progresso_tratamento auto_increment = 1;
 
 
 insert into estado (id, nome) values (1, 'Minas Gerais');
@@ -55,11 +55,11 @@ insert into paciente (id, dono_id, raca_id, nome, sexo, porte, data_nascimento, 
 
 insert into historico_peso (id, paciente_id, data_cadastro, peso) values (1, 1, utc_timestamp, 7.2);
 
-insert into internacao (id, paciente_id, data_admissao, data_termino, peso, temperatura, status, prognostico, diagnostico, observacoes) values (1, 1, '2022-06-01 11:34:04', null, 33, 38.5, 'ATIVA', 'Paciente vomitando.', '', '');
-insert into internacao (id, paciente_id, data_admissao, data_termino, peso, temperatura, status, prognostico, diagnostico, observacoes) values (2, 2, '2019-11-01 11:14:04', null, 33, 38.5, 'TERMINADA', 'Manchas na pele.', 'Sarna', '');
+insert into internacao (id, paciente_id, data_admissao, data_alta, peso, temperatura, status, prognostico, diagnostico, observacoes) values (1, 1, '2022-06-01 11:34:04', null, 33, 38.5, 'ATIVA', 'Paciente vomitando.', '', '');
+insert into internacao (id, paciente_id, data_admissao, data_alta, peso, temperatura, status, prognostico, diagnostico, observacoes) values (2, 2, '2019-11-01 11:14:04', null, 33, 38.5, 'TERMINADA', 'Manchas na pele.', 'Sarna', '');
 
-insert into tratamento_internacao (id, internacao_id, nome, data, dose, via_medicamento) values (1, 2, 'Aplicação de pomada para sarna', '2019-11-01 11:34:04', null, 'CUTANEA');
-insert into tratamento_internacao (id, internacao_id, nome, data, dose, via_medicamento) values (2, 2, 'Calmante', '2019-11-02 20:34:04', null, 'ORAL');
+insert into progresso_tratamento (id, internacao_id, nome, data, dose, via_medicamento) values (1, 2, 'Aplicação de pomada para sarna', '2019-11-01 11:34:04', null, 'CUTANEA');
+insert into progresso_tratamento (id, internacao_id, nome, data, dose, via_medicamento) values (2, 2, 'Calmante', '2019-11-02 20:34:04', null, 'ORAL');
 
 insert into usuario (id, nome, email, senha, data_cadastro) values
 (1, 'João da Silva', 'joao.ger@algafood.com', '123', utc_timestamp),

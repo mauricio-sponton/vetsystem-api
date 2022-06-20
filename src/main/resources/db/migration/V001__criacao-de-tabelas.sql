@@ -87,7 +87,7 @@ create table internacao (
 	id bigint not null auto_increment, 
 	paciente_id bigint not null,
 	data_admissao datetime not null,
-	data_termino datetime,
+	data_alta datetime,
 	peso decimal(6,3),
 	temperatura decimal(3,1),
 	status varchar(30),
@@ -98,8 +98,8 @@ create table internacao (
 	primary key (id)	
 ) engine=InnoDB default charset=utf8;
 
-create table tratamento_internacao (
-	id bigint not null,
+create table progresso_tratamento (
+	id bigint not null auto_increment,
 	internacao_id bigint not null,
 	nome longtext not null,
 	data datetime not null,
@@ -125,7 +125,7 @@ foreign key (especie_id) references especie (id);
 alter table internacao add constraint fk_internacao_paciente
 foreign key (paciente_id) references paciente (id);
 
-alter table tratamento_internacao add constraint fk_tratamento_internacao_internacao
+alter table progresso_tratamento add constraint fk_progresso_tratamento_internacao
 foreign key (internacao_id) references internacao (id);
 
 alter table historico_peso add constraint fk_historico_peso_paciente
