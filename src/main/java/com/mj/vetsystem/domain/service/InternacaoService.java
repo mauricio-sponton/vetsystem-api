@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.mj.vetsystem.domain.exception.EntidadeEmUsoException;
 import com.mj.vetsystem.domain.exception.InternacaoNaoEncontradaException;
+import com.mj.vetsystem.domain.exception.NegocioException;
 import com.mj.vetsystem.domain.model.Internacao;
 import com.mj.vetsystem.domain.model.Paciente;
 import com.mj.vetsystem.domain.repository.InternacaoRepository;
@@ -32,11 +33,13 @@ public class InternacaoService {
 
 	@Transactional
 	public Internacao salvar(Internacao internacao) {
-		Long pacienteId = internacao.getPaciente().getId();
-
-		Paciente paciente = pacienteService.buscarOuFalhar(pacienteId);
-
-		internacao.setPaciente(paciente);
+		
+		boolean pacienteInternado = internacaoRepository.isPacienteInternado(internacao.getPaciente().getId());
+		if(pacienteInternado) {
+			throw new NegocioException(String.format("Paciente de código %d já está internado", internacao.getPaciente().getId()));
+		}
+		
+		buscarPacienteOuFalhar(internacao);
 
 		return internacaoRepository.save(internacao);
 	}
@@ -45,22 +48,16 @@ public class InternacaoService {
 	public Internacao atualizar(Long internacaoId, Internacao internacaoParaAtualizar) {
 		Internacao internacao = buscarOuFalhar(internacaoId);
 		
-		
-		
 		internacao.getTratamentos().clear();
 		internacao.getTratamentos().addAll(internacaoParaAtualizar.getTratamentos());
-
 		validarTratamentos(internacao);
 		
 		BeanUtils.copyProperties(internacaoParaAtualizar, internacao, "id", "tratamentos");
 		
-		Long pacienteId = internacao.getPaciente().getId();
-		Paciente paciente = pacienteService.buscarOuFalhar(pacienteId);
-		internacao.setPaciente(paciente);
+		buscarPacienteOuFalhar(internacao);
 
 		return internacaoRepository.save(internacao);
 	}
-
 
 	@Transactional
 	public void excluir(Long internacaoId) {
@@ -85,5 +82,12 @@ public class InternacaoService {
 		internacao.getTratamentos().forEach(tratamento -> {
 			tratamento.setInternacao(internacao);
 		});
+	}
+	
+	
+	private void buscarPacienteOuFalhar(Internacao internacao) {
+		Long pacienteId = internacao.getPaciente().getId();
+		Paciente paciente = pacienteService.buscarOuFalhar(pacienteId);
+		internacao.setPaciente(paciente);
 	}
 }

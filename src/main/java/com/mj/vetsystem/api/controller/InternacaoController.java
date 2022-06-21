@@ -36,71 +36,70 @@ public class InternacaoController {
 
 	@Autowired
 	private InternacaoService internacaoService;
-	
+
 	@Autowired
 	private InternacaoModelAssembler internacaoModelAssembler;
 
 	@Autowired
-	private InternacaoInputDisassembler internacaoInputDisassembler; 
+	private InternacaoInputDisassembler internacaoInputDisassembler;
 
 	@GetMapping
 	public Page<InternacaoModel> listar(Pageable pageable) {
 		pageable = traduzirPageable(pageable);
 		Page<Internacao> todasInternacaos = internacaoService.listar(pageable);
-		List<InternacaoModel> internacaosModel = internacaoModelAssembler.toCollectionModel(todasInternacaos.getContent());
-		Page<InternacaoModel> internacaoModelPage = new PageImpl<InternacaoModel>(internacaosModel, pageable, todasInternacaos.getTotalElements());
+		List<InternacaoModel> internacaosModel = internacaoModelAssembler
+				.toCollectionModel(todasInternacaos.getContent());
+		Page<InternacaoModel> internacaoModelPage = new PageImpl<InternacaoModel>(internacaosModel, pageable,
+				todasInternacaos.getTotalElements());
 		return internacaoModelPage;
 	}
 
 	@GetMapping("/{internacaoId}")
 	public InternacaoModel buscar(@PathVariable Long internacaoId) {
-	    Internacao internacao = internacaoService.buscarOuFalhar(internacaoId);
-	    
-	    return internacaoModelAssembler.toModel(internacao);
+		Internacao internacao = internacaoService.buscarOuFalhar(internacaoId);
+
+		return internacaoModelAssembler.toModel(internacao);
 	}
 
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
 	public InternacaoModel adicionar(@RequestBody @Valid InternacaoInput internacaoInput) {
-	    try {
-	        Internacao internacao = internacaoInputDisassembler.toDomainObject(internacaoInput);
-	        
-	        internacao = internacaoService.salvar(internacao);
-	        
-	        return internacaoModelAssembler.toModel(internacao);
-	    } catch (PacienteNaoEncontradoException e) {
-	        throw new NegocioException(e.getMessage(), e);
-	    }
-	}
-	
-	@PutMapping("/{internacaoId}")
-	public InternacaoModel atualizar(@PathVariable Long internacaoId,
-	        @RequestBody @Valid InternacaoInput internacaoInput) {
-	    try {
-	    	
-	    	Internacao novaInternacao = internacaoInputDisassembler.toDomainObject(internacaoInput);
-	    	novaInternacao = internacaoService.atualizar(internacaoId, novaInternacao);
-	    	
-	        
-	        return internacaoModelAssembler.toModel(novaInternacao);
-	    } catch (PacienteNaoEncontradoException e) {
-	        throw new NegocioException(e.getMessage(), e);
-	    }
+		try {
+			Internacao internacao = internacaoInputDisassembler.toDomainObject(internacaoInput);
+
+			internacao = internacaoService.salvar(internacao);
+
+			return internacaoModelAssembler.toModel(internacao);
+		} catch (PacienteNaoEncontradoException e) {
+			throw new NegocioException(e.getMessage(), e);
+		}
 	}
 
+	@PutMapping("/{internacaoId}")
+	public InternacaoModel atualizar(@PathVariable Long internacaoId,
+			@RequestBody @Valid InternacaoInput internacaoInput) {
+		try {
+
+			Internacao novaInternacao = internacaoInputDisassembler.toDomainObject(internacaoInput);
+			novaInternacao = internacaoService.atualizar(internacaoId, novaInternacao);
+
+			return internacaoModelAssembler.toModel(novaInternacao);
+		} catch (PacienteNaoEncontradoException e) {
+			throw new NegocioException(e.getMessage(), e);
+		}
+	}
 
 	@DeleteMapping("/{internacaoId}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public void remover(@PathVariable Long internacaoId) {
 		internacaoService.excluir(internacaoId);
 	}
-	
+
 	private Pageable traduzirPageable(Pageable apiPageable) {
-		var mapeamento = Map.of(
-				"id", "id"
-				
+		var mapeamento = Map.of("id", "id"
+
 		);
-		
+
 		return PageableTranslator.translate(apiPageable, mapeamento);
 	}
 
